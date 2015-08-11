@@ -1,0 +1,10 @@
+
+keytool -genkey -v -keystore demomobile.keystore -alias demomobile -keyalg RSA -keysize 2048 -validity 10000
+
+meteor build ~/demo_mobile/ --server http://tirtohadi.meteor.com
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore demomobile.keystore unaligned.apk demomobile
+
+jarsigner -verify -verbose -certs unaligned.apk
+
+zipalign -v 4 unaligned.apk demomobile.apk
